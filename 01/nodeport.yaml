@@ -1,0 +1,13 @@
+apiVersion: v1                 # Kubernetes API version
+kind: Service                  # Type of Kubernetes resource
+metadata:                      # Metadata section
+  name: web1-svc               # Service name
+spec:                          # Service specification
+  type: NodePort               # Expose service on each node's IP
+  selector:                    # Select pods using labels
+    app: web                   # Must match pod label
+  ports:                       # Service port configuration
+    - port: 80                 # Service port
+      targetPort: 80           # Container port
+      nodePort: 30000          # NodePort accessible externally
+      protocol: TCP             # Communication protocol

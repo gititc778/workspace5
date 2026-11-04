@@ -1,0 +1,13 @@
+apiVersion: v1                  # Kubernetes API version
+kind: Service                   # Resource type
+metadata:
+  name: flask-app-svc            # Service name
+spec:
+  type: NodePort                # Internal cluster access
+  selector:
+    app: flask-app               # Matches deployment pod labels
+  ports:
+    - protocol: TCP              # Communication protocol
+      port: 8080                # Service port
+      targetPort: 8080           # Container port
+      nodePort: 30080            # Node port

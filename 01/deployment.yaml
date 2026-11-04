@@ -1,0 +1,37 @@
+apiVersion: apps/v1                 # Kubernetes Deployment API version
+kind: Deployment                    # Type of Kubernetes resource
+metadata:                           # Metadata section
+  name: web1-deployment              # Deployment name
+  namespace: dev
+spec:                               # Deployment specification
+  replicas: 5                   # Run 3 pod replicas
+  selector:                         # Select pods managed by deployment
+    matchLabels:                    # Match pods using labels
+      app: web                     # Must match pod template label
+
+  template:                         # Pod template
+    metadata:                       # Pod metadata
+      labels:                       # Labels assigned to pods
+        app: web                    # Application label
+    spec:                           # Pod specification
+      containers:                   # List of containers
+        - name: nginx               # Container name
+          image: nginx:stable-alpine      # Docker image
+          ports:                    # Container ports
+            - containerPort: 80     # Application port
+
+---
+
+apiVersion: v1                 # Kubernetes API version
+kind: Service                  # Type of Kubernetes resource
+metadata:                      # Metadata section
+  name: web1-svc               # Service name
+  namespace: dev
+spec:                          # Service specification
+  type: ClusterIP              # Expose service inside the cluster only
+  selector:                    # Select pods using labels
+    app: web                   # Must match pod label
+  ports:                       # Service port configuration
+    - port: 8080               # Service port
+      targetPort: 80           # Container port
+      protocol: TCP            # Communication protocol

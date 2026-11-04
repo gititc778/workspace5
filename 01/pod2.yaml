@@ -1,0 +1,12 @@
+apiVersion: v1                 # Kubernetes API version
+kind: Pod                      # Type of Kubernetes resource
+metadata:                      # Metadata section
+  name: web2                   # Name of the pod
+  labels:                      # Labels assigned to the pod
+    app: web                    # Application label
+spec:                          # Pod specification
+  containers:                  # List of containers
+    - name: nginx              # Container name
+      image: nginx:latest      # Docker image to use
+      ports:                   # Container ports
+        - containerPort: 80    # Port exposed by the container
