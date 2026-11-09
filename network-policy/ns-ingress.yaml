@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-namespace
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx-2
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          team: dev   #Only pods from team=dev namespace allowed
