@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-dashboard
+  template:
+    metadata:
+      labels:
+        app: py-dashboard
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: vmtype
+                    operator: NotIn
+                    values:
+                      - highmem
+      containers:
+        - name: py-dashboard-container
+          image: dockeritc778/py-dashboard
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: host-data
+              mountPath: /app/config
+      volumes:
+        - name: host-data
+          persistentVolumeClaim:
+            claimName: flask-dynamic-pvc

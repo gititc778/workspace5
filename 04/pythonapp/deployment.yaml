@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: py-dashboard
+  template:
+    metadata:
+      labels:
+        app: py-dashboard
+    spec:
+      containers:
+        - name: py-dashboard-container
+          image: dockeritc778/py-dashboard:v1.1
+          ports:
+            - containerPort: 5000
